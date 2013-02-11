@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{191D211E-0F7E-4A71-A1FB-3AA9B6E8C01F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Cayita.Tools</RootNamespace>
+    <AssemblyName>Cayita.Tools</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\lib\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\lib\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\lib\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite">
+      <HintPath>..\..\lib\ServiceStack.OrmLite.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Linq.Expressions">
+      <HintPath>..\..\lib\Mono.Linq.Expressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="ServiceStack.ServiceInterface">
+      <HintPath>..\..\lib\ServiceStack.ServiceInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack">
+      <HintPath>..\..\lib\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="UserManager.cs" />
+    <Compile Include="Pager.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="AuthRepoProxy.cs" />
+    <Compile Include="Defs.cs" />
+    <Compile Include="Models\AuthRole.cs" />
+    <Compile Include="Models\User.Routes.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\AuthPermission.cs" />
+    <Compile Include="Models\AuthRoleUser.cs" />
+    <Compile Include="IHasIntUserId.cs" />
+    <Compile Include="Models\AuthRolePermission.cs" />
+    <Compile Include="AuthorizationResponse.cs" />
+    <Compile Include="Models\AuthPermission.Routes.cs" />
+    <Compile Include="Models\AuthRole.Routes.cs" />
+    <Compile Include="Models\RolePermission.cs" />
+    <Compile Include="Models\RolePermission.Routes.cs" />
+    <Compile Include="TList.cs" />
+    <Compile Include="Models\UserRole.cs" />
+    <Compile Include="Models\UserRole.Routes.cs" />
+    <Compile Include="AuthenticationProvider.cs" />
+    <Compile Include="PermissionAttribute.cs" />
+    <Compile Include="RequiresAuthenticateAttribute.cs" />
+    <Compile Include="RoleAttribute.cs" />
+    <Compile Include="AuthResponse.cs" />
+    <Compile Include="Models\GetAuthorization.Routes.cs" />
+    <Compile Include="Models\Login.Routes.cs" />
+    <Compile Include="LoginResponse.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+</Project>
