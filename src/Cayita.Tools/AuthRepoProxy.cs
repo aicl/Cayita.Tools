@@ -35,8 +35,6 @@ namespace Cayita.Tools.Auth
 
 		public void CreateAuthTables(OrmLiteAuthRepository authRepo, bool overwrite=false){
 
-			string engine = "ENGINE = InnoDB";
-
 			authRepo.CreateMissingTables();
 
 			DbConnectionFactory.Run(db=>{
@@ -48,16 +46,29 @@ namespace Cayita.Tools.Auth
 				db.CreateTable<RolePermission>(overwrite);
 				db.CreateTable<UserRole>(overwrite);
 
-				db.AlterTable<UserAuth>(engine);
-				db.AlterTable<UserOAuthProvider>(engine);
+			});
+		}
 
-				db.AlterTable<AuthPermission>(engine);
-				db.AlterTable<AuthRole>(engine);
-				db.AlterTable<AuthRolePermission>(engine);
-				db.AlterTable<AuthRoleUser>(engine);
-				db.AlterTable<RolePermission>(engine);
-				db.AlterTable<UserRole>(engine);
-
+		public void SetEngine(OrmLiteAuthRepository authRepo, string engine="InnoDB"){
+			
+			engine = string.Format("ENGINE = {0}",engine);
+			
+			authRepo.CreateMissingTables();
+			
+			DbConnectionFactory.Run(db=>{
+				
+				try{
+					db.AlterTable<UserAuth>(engine);
+					db.AlterTable<UserOAuthProvider>(engine);
+					
+					db.AlterTable<AuthPermission>(engine);
+					db.AlterTable<AuthRole>(engine);
+					db.AlterTable<AuthRolePermission>(engine);
+					db.AlterTable<AuthRoleUser>(engine);
+					db.AlterTable<RolePermission>(engine);
+					db.AlterTable<UserRole>(engine);
+				}
+				catch(Exception){}
 			});
 		}
 

@@ -4,7 +4,6 @@ using ServiceStack.ServiceInterface.Auth;
 using Cayita.Tools.Auth;
 using ServiceStack.Configuration;
 using ServiceStack.OrmLite;
-using ServiceStack.OrmLite.MySql;
 
 namespace CreateAuthTables
 {
@@ -20,7 +19,7 @@ namespace CreateAuthTables
 			strCon= Console.ReadLine();
 			if(strCon.IsNullOrEmpty()) strCon=tmp;
 
-			OrmLiteConfig.DialectProvider= MySqlDialectProvider.Instance;
+			OrmLiteConfig.DialectProvider = FirebirdDialect.Provider;
 
 			var dbFactory = new OrmLiteConnectionFactory(strCon);
 									

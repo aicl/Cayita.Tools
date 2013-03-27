@@ -51,6 +51,9 @@
     <Reference Include="ServiceStack.OrmLite.MySql">
       <HintPath>..\..\lib\ServiceStack.OrmLite.MySql.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.OrmLite.Firebird">
+      <HintPath>..\..\lib\ServiceStack.OrmLite.Firebird.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -58,7 +61,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Cayita.Auth\Cayita.Tools.csproj">
+    <ProjectReference Include="..\Cayita.Tools\Cayita.Tools.csproj">
       <Project>{191D211E-0F7E-4A71-A1FB-3AA9B6E8C01F}</Project>
       <Name>Cayita.Tools</Name>
     </ProjectReference>
