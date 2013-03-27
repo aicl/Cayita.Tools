@@ -4,9 +4,9 @@ using ServiceStack.FluentValidation;
 using ServiceStack.ServiceInterface;
 using ServiceStack.Common.Web;
 using ServiceStack.Redis;
-using ServiceStack.Common.Extensions;
 using System.Globalization;
 using ServiceStack.FluentValidation.Results;
+using ServiceStack.Common;
 
 namespace Cayita.Tools.Auth
 {
@@ -53,6 +53,7 @@ namespace Cayita.Tools.Auth
 				{
 					User user = new User();
 					user.PopulateWith(userAuth);
+
 					user.IsActive=usermeta!=null? usermeta.IsActive:true;
 					user.Info=  usermeta!=null?usermeta.Info:"";
 					user.ExpiresAt= usermeta!=null?usermeta.ExpiresAt:null;

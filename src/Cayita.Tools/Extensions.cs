@@ -1,15 +1,14 @@
 using System;
 using ServiceStack.ServiceHost;
-using System.Collections.Generic;
 using System.Data;
 using ServiceStack.OrmLite;
 using ServiceStack.DesignPatterns.Model;
-using System.Linq.Expressions;
 using System.Reflection;
 using ServiceStack.Common.Utils;
 using Cayita.Tools;
 using Cayita.Tools.Auth;
 using ServiceStack.ServiceInterface;
+using ServiceStack.Text;
 
 namespace ServiceStack.ServiceHost
 {
@@ -45,26 +44,27 @@ namespace ServiceStack.OrmLite{
 	public static partial class Extensions
 	{
 				
-		public static List<T> GetListFromCache<T>(this IDbCommand dbcmd) where T: new()
-		{
-			return dbcmd.Select<T>();
-		}
+		//public static List<T> GetListFromCache<T>(this IDbConnection dbConn) where T: new()
+		//{
+		//	return dbConn.Select<T>();
+		//}
 		
-		public static void InsertAndAssertId<T>(this IDbCommand dbCmd,  T request ) 
+		public static void InsertAndAssertId<T>(this IDbConnection dbConn,  T request ) 
 			where T: IHasIntId, new()
 		{
-			dbCmd.Insert<T>(request);
+			dbConn.Insert<T>(request);
 			
 			if( request.Id==default(int))
 			{
 				Type type = typeof(T);
-				PropertyInfo pi= ReflectionUtils.GetPropertyInfo(type, OrmLiteConfig.IdField);
-				var li = dbCmd.GetLastInsertId();
+				PropertyInfo pi= type.GetPropertyInfo( OrmLiteConfig.IdField );
+				var li = dbConn.GetLastInsertId();
 				ReflectionUtils.SetProperty(request, pi, Convert.ToInt32(li));  
 			}
 			
 		}
 		
+/*
 		public static long Count<T>(this IDbCommand dbCmd, Expression<Func<T, bool>> predicate )
 			where T: IHasIntId, new()
 		{
@@ -72,6 +72,7 @@ namespace ServiceStack.OrmLite{
 				e=>  Sql.Count(e.Id),
 				predicate );
 		}
+*/
 					
 	}
 

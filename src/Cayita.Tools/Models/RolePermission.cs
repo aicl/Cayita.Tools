@@ -3,7 +3,7 @@ using ServiceStack.DesignPatterns.Model;
 
 namespace Cayita.Tools.Auth
 {
-	[JoinTo(typeof(AuthPermission),"AuthPermissionId","Id")]
+	//[JoinTo(typeof(AuthPermission),"AuthPermissionId","Id")]
 	[Alias("AuthRolePermission")]
 	public class RolePermission:IHasIntId
 	{
@@ -19,7 +19,8 @@ namespace Cayita.Tools.Auth
 		
 		public int AuthPermissionId { get; set;} 
 		
-		[BelongsTo(typeof(AuthPermission))]
+		//[BelongsTo(typeof(AuthPermission))]
+		[Ignore]
 		public string Name {get;set;}
 		
 	}

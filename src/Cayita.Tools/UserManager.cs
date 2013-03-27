@@ -4,7 +4,6 @@ using ServiceStack.Common;
 using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceHost;
 using ServiceStack.OrmLite;
-using Mono.Linq.Expressions;
 using ServiceStack.Common.Web;
 using ServiceStack.ServiceInterface.Auth;
 using System.Collections.Generic;
@@ -44,7 +43,7 @@ namespace Cayita.Tools.Auth
 					predicate= q=>q.UserName.StartsWith(request.UserName) ;
 
 				if(userSession.UserName.ToLower()!=RoleNames.Admin.ToLower())
-					predicate=predicate.AndAlso(q=>q.UserName!=RoleNames.Admin);
+					predicate=predicate.And(q=>q.UserName!=RoleNames.Admin);
 					
 			}
 			else
@@ -201,14 +200,13 @@ namespace Cayita.Tools.Auth
 			List<AuthRole> rol = new List<AuthRole>();
 			List<AuthPermission> per = new List<AuthPermission>();
 			List<AuthRolePermission> rol_per = new List<AuthRolePermission>();
-			
+
 			AuthRepoProxy.Execute(db=>{
 
 				aur=  db.Select<AuthRoleUser>(q=>q.UserId==request.UserId);
-				//proxy.GetByUserIdFromCache<AuthRoleUser>(request.UserId); // causa problemas .net !!! no en mono
-				rol= db.GetListFromCache<AuthRole>();
-				per= db.GetListFromCache<AuthPermission>();
-				rol_per= db.GetListFromCache<AuthRolePermission>();
+				rol= db.Select<AuthRole>();
+				per= db.Select<AuthPermission>();
+				rol_per= db.Select<AuthRolePermission>();
 				
 				foreach( var r in aur)
 				{
@@ -266,7 +264,6 @@ namespace Cayita.Tools.Auth
 			var au = new AuthPermission{Name= request.Name};
 		
 			AuthRepoProxy.Execute(db=>{
-				//db.DeleteFromCache<AuthPermission>();
 				db.InsertAndAssertId(au);
 			});
 			
@@ -277,7 +274,6 @@ namespace Cayita.Tools.Auth
 		{
 			var au =new AuthPermission{Name= request.Name};
 			AuthRepoProxy.Execute(db=>{
-				//db.DeleteFromCache<AuthPermission>();
 				db.Update(au);
 			});
 			
@@ -333,7 +329,6 @@ namespace Cayita.Tools.Auth
 			ar.PopulateWith(request);
 
 			AuthRepoProxy.Execute(db=>{
-				//db.DeleteFromCache<AuthRole>();
 				db.InsertAndAssertId(ar);
 			});
 			
@@ -356,7 +351,6 @@ namespace Cayita.Tools.Auth
 		public void DeleteAuthRole(DeleteAuthRole request)
 		{
 			AuthRepoProxy.Execute(db=>{
-				//db.DeleteFromCache<AuthRole>();
 				db.Delete<AuthRole>(q=>q.Id==request.Id);
 			});
 				
@@ -416,7 +410,6 @@ namespace Cayita.Tools.Auth
 		public void DeleteRolePermission(DeleteRolePermission request)
 		{
 			AuthRepoProxy.Execute(db=>{
-				//db.DeleteFromCache<AuthRolePermission>();
 				db.Delete<RolePermission>(q=>q.Id==request.Id);
 			});
 

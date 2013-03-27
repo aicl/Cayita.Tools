@@ -23,12 +23,12 @@ namespace Cayita.Tools.Auth
 			RedisClientsManager= redisClientsManager;		}
 		
 
-		public void Execute( Action<IDbCommand> commands)
+		public void Execute( Action<IDbConnection> commands)
 		{
 			DbConnectionFactory.Run(dbCmd=>{commands(dbCmd);});
 		}
 		
-		public T Execute<T>( Func<IDbCommand,T> commands)
+		public T Execute<T>( Func<IDbConnection,T> commands)
 		{
 			return DbConnectionFactory.Run(dbCmd=>{return commands(dbCmd);});
 		}

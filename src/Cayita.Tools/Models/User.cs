@@ -21,7 +21,7 @@ namespace Cayita.Tools.Auth
 		public virtual string LastName { get; set; }
 		public string Email { get; set; }
 		
-		public Dictionary<string, string> Meta { private get; set; }
+		public Dictionary<string, string> Meta { get; set; }
 		
 		[Ignore]
 		public string Info {
@@ -79,7 +79,7 @@ namespace Cayita.Tools.Auth
 		public bool IsActive {get;set;}
 		public DateTime? ExpiresAt {get;set;}
 		
-		public void PopulateFromMeta(Dictionary<string, string> meta){
+		public void PopulateFromMeta(IDictionary<string, string> meta){
 			if(meta==null) return;
 			string str = null;
 			meta.TryGetValue(typeof(UserMeta).Name, out str);
