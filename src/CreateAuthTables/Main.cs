@@ -38,6 +38,9 @@ namespace CreateAuthTables
 
 			password= rp.CreateAdminUser(authRepo, "Admin", "App", "admin@gmail.com", password);
 
+			UserAuth user = new UserAuth{ UserName="user", Email="user@mail.com"};
+
+			rp.CreateUser (authRepo, user);
 			Console.WriteLine(password);
 
 		}

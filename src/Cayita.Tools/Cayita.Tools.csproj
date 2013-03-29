@@ -82,6 +82,8 @@
     <Compile Include="Models\GetAuthorization.Routes.cs" />
     <Compile Include="Models\Login.Routes.cs" />
     <Compile Include="LoginResponse.cs" />
+    <Compile Include="DbProxy.cs" />
+    <Compile Include="Mailer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -14,12 +14,13 @@ namespace Cayita.Tools
 		public List<T> Result{
 			get;set;
 		}
+
+		public string Html {get;set;}
 		
 		public long? TotalCount {
-			get {return totalCount.HasValue? totalCount.Value: Result.Count;}
-			set { totalCount=value;}
+			get { return totalCount.HasValue ? totalCount.Value : Result.Count;}
+			set { totalCount = value;}
 		}
-		
 	}
 
 }

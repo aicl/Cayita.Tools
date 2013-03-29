@@ -1,4 +1,3 @@
-
 namespace Cayita.Tools
 {
 	public class Pager

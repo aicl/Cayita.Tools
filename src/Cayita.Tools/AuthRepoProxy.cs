@@ -158,37 +158,38 @@ namespace Cayita.Tools.Auth
 		}
 
 
-		public string CreateUser(OrmLiteAuthRepository authRepo, string userName, string email,
-		                              string firstname=null, string lastname=null, 
+		public string CreateUser(OrmLiteAuthRepository authRepo, UserAuth newUser,
 		                              string password=null )
 		{
 			if(password.IsNullOrEmpty()) password= CreateRandomPassword(8);
-			
-			if(firstname.IsNullOrEmpty()) firstname="User";
-			if(lastname.IsNullOrEmpty()) lastname="App";
-			string displayname = "{0} {1}".Fmt(firstname, lastname);
+
+			if (newUser.FirstName.IsNullOrEmpty ())
+				newUser.FirstName = "User";
+
+			if (newUser.LastName.IsNullOrEmpty ())
+				newUser.LastName= "App";
+
+			if (newUser.Email.IsNullOrEmpty ())
+				newUser.Email= "{0}gmail.com".Fmt(newUser.UserName);
+
+			if (newUser.DisplayName.IsNullOrEmpty ())
+				newUser.DisplayName= "{0} {1}".Fmt(newUser.FirstName, newUser.LastName);
+
+			newUser.ModifiedDate = DateTime.Now;
 						
-			var newUser= new UserAuth {
-				DisplayName = displayname,
-				Email = email,
-				UserName = userName,
-				FirstName = firstname,
-				LastName = lastname,
-				ModifiedDate= DateTime.Now
-			};
-			
-			var userAuth=authRepo.GetUserAuthByUserName(userName);
+
+			var userAuth=authRepo.GetUserAuthByUserName(newUser.UserName);
 			
 			if ( userAuth== default(UserAuth) )
 			{
 				newUser.Permissions=new List<string>(new string[]{});
 				newUser.Roles =new List<string>(new string[]{});
 				newUser.Meta= new Dictionary<string,string>();
-				userAuth =authRepo.CreateUserAuth(newUser,password);
+				authRepo.CreateUserAuth(newUser,password);
 			}
 			else
 			{
-				userAuth=authRepo.UpdateUserAuth(userAuth, newUser, password);
+				authRepo.UpdateUserAuth(userAuth, newUser, password);
 			}
 
 			return password;

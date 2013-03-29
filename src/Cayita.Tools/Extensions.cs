@@ -10,6 +10,20 @@ using Cayita.Tools.Auth;
 using ServiceStack.ServiceInterface;
 using ServiceStack.Text;
 
+namespace System.Collections.Generic
+{
+	public static partial class Extensions
+	{
+		public static TList<T> ConvertToTList<T>(this List<T> source)
+		{
+			TList<T> t = new TList<T> ();
+			t.Result = source;
+			return t;
+		}
+	}
+
+}
+
 namespace ServiceStack.ServiceHost
 {
 	public static partial class Extensions
@@ -49,10 +63,13 @@ namespace ServiceStack.OrmLite{
 		//	return dbConn.Select<T>();
 		//}
 		
-		public static void InsertAndAssertId<T>(this IDbConnection dbConn,  T request ) 
+		public static void InsertAndAssertId<T>(this IDbConnection dbConn,  T request, SqlExpressionVisitor<T> visitor=null ) 
 			where T: IHasIntId, new()
 		{
-			dbConn.Insert<T>(request);
+			if (visitor == null)
+				dbConn.Insert<T> (request);
+			else
+				dbConn.InsertOnly<T> (request, visitor);
 			
 			if( request.Id==default(int))
 			{
