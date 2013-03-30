@@ -9,6 +9,7 @@ using Cayita.Tools;
 using Cayita.Tools.Auth;
 using ServiceStack.ServiceInterface;
 using ServiceStack.Text;
+using System.Linq.Expressions;
 
 namespace System.Collections.Generic
 {
@@ -21,7 +22,19 @@ namespace System.Collections.Generic
 			return t;
 		}
 	}
+}
 
+namespace ServiceStack.Text
+{
+	public static partial class Extensions
+	{
+		public static string GetQuotedFieldName<T>(this ModelDefinition modelDef, Expression<Func<T,object>> field) 
+		{
+			return OrmLiteConfig.DialectProvider.GetQuotedColumnName (
+				modelDef.GetFieldDefinition (field).FieldName);
+
+		}
+	}
 }
 
 namespace ServiceStack.ServiceHost
