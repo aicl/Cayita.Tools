@@ -15,11 +15,9 @@ namespace System.Collections.Generic
 {
 	public static partial class Extensions
 	{
-		public static TList<T> ConvertToTList<T>(this List<T> source)
+		public static TList<T> ConvertToTList<T>(this List<T> source, long? totalCount)
 		{
-			TList<T> t = new TList<T> ();
-			t.Result = source;
-			return t;
+			return  new TList<T> { Result = source, TotalCount = totalCount };
 		}
 	}
 }
