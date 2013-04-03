@@ -10,6 +10,7 @@ using Cayita.Tools.Auth;
 using ServiceStack.ServiceInterface;
 using ServiceStack.Text;
 using System.Linq.Expressions;
+using ServiceStack.Redis;
 
 namespace System.Collections.Generic
 {
@@ -162,6 +163,26 @@ namespace ServiceStack.Redis{
 			}
 		}
 
+
 	}
 
+}
+namespace ServiceStack.ServiceInterface{
+
+	public static partial class Extensions
+	{
+		public static void RemoveUserData(this  IServiceBase authService)
+		{
+			var cache = authService.TryResolve<IRedisClientsManager>();
+			if(cache!=null){
+				var sessionId = authService.GetSessionId();
+				
+				var pattern = string.Format("urn:{0}:*", sessionId);
+				cache.Execute(client=>{
+					var keys =client.SearchKeys(pattern);
+					client.RemoveAll(keys);
+				}); 		
+			}
+		}
+	}
 }
