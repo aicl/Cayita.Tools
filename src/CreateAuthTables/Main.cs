@@ -19,7 +19,7 @@ namespace CreateAuthTables
 			strCon= Console.ReadLine();
 			if(strCon.IsNullOrEmpty()) strCon=tmp;
 
-			OrmLiteConfig.DialectProvider = FirebirdDialect.Provider;
+			OrmLiteConfig.DialectProvider = MySqlDialect.Provider;
 
 			var dbFactory = new OrmLiteConnectionFactory(strCon);
 									
@@ -28,6 +28,8 @@ namespace CreateAuthTables
 			AuthRepoProxy rp = new AuthRepoProxy(dbFactory, null);
 
 			rp.CreateAuthTables(authRepo,false);
+
+			rp.SetEngine (authRepo);
 
 			string password = rp.CreateRandomPassword(8);
 

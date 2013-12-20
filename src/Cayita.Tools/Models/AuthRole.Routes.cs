@@ -32,7 +32,8 @@ namespace Cayita.Tools.Auth
 		public UpdateAuthRole ()
 		{
 		}
-		
+
+		public int Id { get; set; }
 		public String Name { get; set;}
 		public String Directory { get; set;} 
 		public String ShowOrder { get; set;} 

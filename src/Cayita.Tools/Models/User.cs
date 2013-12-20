@@ -6,6 +6,7 @@ using ServiceStack.Text;
 
 namespace Cayita.Tools.Auth
 {
+	[Alias("UserAuth")]
 	public class User:IHasIntId
 	{
 		UserMeta metadata;

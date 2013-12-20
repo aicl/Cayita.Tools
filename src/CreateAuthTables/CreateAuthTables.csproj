@@ -51,9 +51,6 @@
     <Reference Include="ServiceStack.OrmLite.MySql">
       <HintPath>..\..\lib\ServiceStack.OrmLite.MySql.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite.Firebird">
-      <HintPath>..\..\lib\ServiceStack.OrmLite.Firebird.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
