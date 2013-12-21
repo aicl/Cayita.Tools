@@ -420,8 +420,14 @@ namespace Cayita.Tools.Auth
 		{
 			var httpRequest = RequestContext.Get<IHttpRequest>();
 			
-			var userSession = httpRequest.GetSession();
-			
+			var userSession = httpRequest.GetSession ();
+
+			if (userSession == null)
+				return new TList<UserRole> ();
+
+			if (!request.UserId.HasValue)
+				request.UserId = default(int);
+						
 			long? totalCount=null;
 			
 			var pager= httpRequest.BuildPager();
@@ -429,18 +435,13 @@ namespace Cayita.Tools.Auth
 			var visitor = ReadExtensions.CreateExpression<UserRole>();
 			var predicate = PredicateBuilder.True<UserRole>();
 						
-			if(request.UserId==default(int))
-				request.UserId= int.Parse(userSession.UserAuthId);
-			else if(!(userSession.HasRole(RoleNames.Admin)) &&
-			        request.UserId != int.Parse(userSession.UserAuthId)
-			        )
-			{
-				throw HttpError.Unauthorized("User no allowed to read roles from other user");
+			if (request.UserId == default(int))
+				request.UserId = int.Parse (userSession.UserAuthId);
+			else if (!(userSession.HasRole (RoleNames.Admin)) && request.UserId != int.Parse (userSession.UserAuthId)) {
+				throw HttpError.Unauthorized ("User no allowed to read roles from other user");
 			}
-			
+						
 			predicate= q=>q.UserId==request.UserId;
-			
-			visitor.Where(predicate).OrderBy(f=>f.Name);
 
 			return AuthRepoProxy.Execute(db=>{
 				
@@ -450,9 +451,26 @@ namespace Cayita.Tools.Auth
 					int rows= pager.PageSize.HasValue? pager.PageSize.Value:Defs.PageSize;
 					visitor.Limit(pager.PageNumber.Value*rows, rows);
 				}
+
+				visitor.Where(predicate);
+
+				var ur = db.Select(visitor);
+				if(ur.Count>0)
+				{
+					var rp = PredicateBuilder.False<AuthRole>();
+					foreach (var r in ur)
+					{
+						rp= rp.Or(f=>f.Id==r.AuthRoleId);
+					}
+					var roles = db.Select<AuthRole>(rp);
+
+					foreach (var r in ur){
+						r.Name= roles.Find(f=>f.Id==r.AuthRoleId).Name;
+					}
+				}
 								
 				return new TList<UserRole>(){
-					Result=db.Select(visitor),
+					Result=ur,
 					TotalCount=totalCount
 				};
 			});

@@ -62,7 +62,6 @@ namespace Cayita.Tools.Auth
 						client.Set<User>( authService.GetUserUrn(), user, SessionExpiry.Value );
 					});
 
-
 				}
 
 				session.PopulateWith(userAuth);
