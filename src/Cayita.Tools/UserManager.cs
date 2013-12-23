@@ -488,7 +488,7 @@ namespace Cayita.Tools.Auth
 				if(role==default(AuthRole))
 					throw HttpError.NotFound(string.Format("No found rolr  Id :'{0}'",
 					                                       request.AuthRoleId));
-				db.Insert(ur);
+				db.InsertAndAssertId(ur);
 				ur.Name= role.Name;
 			});
 			
