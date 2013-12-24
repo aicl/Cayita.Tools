@@ -36,7 +36,7 @@ namespace Cayita.Tools.Auth
 				
 			if (userSession.HasRole(RoleNames.Admin))
 			{
-				if(request.Id!=default(int))
+				if(request.Id.HasValue && request.Id.Value!=default(int))
 					predicate= q=>q.Id==request.Id;
 
 				if(!request.UserName.IsNullOrEmpty()) 
