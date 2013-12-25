@@ -54,6 +54,38 @@ namespace CreateAuthTables
 			password= rp.CreateUser (authRepo, user,password);
 			Console.WriteLine(password);
 
+
+			dbFactory.Run (c => {
+				if(c.FirstOrDefault<AuthRole>(f=>f.Name=="Radicar")==default(AuthRole))
+					c.Insert<AuthRole>(new AuthRole{Name = "Radicar", Title = "Recepcionista"});
+
+				if(c.FirstOrDefault<AuthRole>(f=>f.Name=="Asignar")==default(AuthRole))
+					c.Insert<AuthRole>(new AuthRole{Name = "Asignar", Title = "Secretario General"});
+
+				if(c.FirstOrDefault<AuthRole>(f=>f.Name=="Solucionar")==default(AuthRole))
+					c.Insert<AuthRole>(new AuthRole{Name = "Solucionar", Title = "Abogado"});
+
+				if(c.FirstOrDefault<AuthRole>(f=>f.Name=="Firmar")==default(AuthRole))
+					c.Insert<AuthRole>(new AuthRole{Name = "Firmar", Title = "Abogado"});
+
+				if(c.FirstOrDefault<AuthRole>(f=>f.Name=="RegistrarFirmar")==default(AuthRole))
+					c.Insert<AuthRole>(new AuthRole{Name = "RegistrarFirmar", Title = "Recepcionista"});
+
+				if(c.FirstOrDefault<AuthRole>(f=>f.Name=="Alistar")==default(AuthRole))
+					c.Insert<AuthRole>(new AuthRole{Name = "Alistar", Title = "Recepcionista"});
+
+				if(c.FirstOrDefault<AuthRole>(f=>f.Name=="Entregar")==default(AuthRole))
+					c.Insert<AuthRole>(new AuthRole{Name = "Entregar", Title = "Mensajero"});
+
+				if(c.FirstOrDefault<AuthRole>(f=>f.Name=="Cerrar")==default(AuthRole))
+					c.Insert<AuthRole>(new AuthRole{Name = "Cerrar", Title = "Recepcionista"});
+
+				if(c.FirstOrDefault<AuthRole>(f=>f.Name=="Consultar")==default(AuthRole))
+					c.Insert<AuthRole>(new AuthRole{Name = "Consultar", Title = "Público"});
+
+
+			});
+
 		}
 
 
