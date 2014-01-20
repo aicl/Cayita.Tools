@@ -460,7 +460,8 @@ namespace Cayita.Tools.Auth
 					var rp = PredicateBuilder.False<AuthRole>();
 					foreach (var r in ur)
 					{
-						rp= rp.Or(f=>f.Id==r.AuthRoleId);
+						var id = r.AuthRoleId;
+						rp= rp.Or(f=>f.Id==id);
 					}
 					var roles = db.Select<AuthRole>(rp);
 
